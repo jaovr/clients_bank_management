@@ -108,7 +108,7 @@ cout << "O CPF cadastrado eh: " << clientes[index_clientes].cpf << endl;
 cout << "O endereco cadastrado eh: " << clientes[index_clientes].endereco << endl;
 cout << "A data de nascimento cadastrada eh: " << clientes[index_clientes].data_nascimento << endl;
 cout << "O valor total de emprestimo eh de: " << clientes[index_clientes].valortotal_emprestimo << endl;
-cout << "O parcelamento do emprestimo ficou em " << clientes[index_clientes].parcelas << "x de " << clientes[index_clientes].parcelas_mensais << endl;
+cout << "O parcelamento do emprestimo ficou em " << clientes[index_clientes].parcelas << "x de R$ " << clientes[index_clientes].parcelas_mensais << endl;
 cout << clientes[index_clientes].emprestimo.data_vencimento << endl;
 cout << endl;
     
@@ -205,6 +205,8 @@ if(aceite_parcelas == 1){
     if (clientes[index_clientes].parcelas > 12) {
 
         clientes[index_clientes].parcelas = 0;
+        clientes[index_clientes].valortotal_emprestimo = 0;
+
         cout << "Nao eh permitido realizar mais que 12 parcelas em um emprestimo" << endl;
     
     }
@@ -214,7 +216,7 @@ if(aceite_parcelas == 1){
          cout << endl;
          cout << "Insira a data de vencimento da parcela: " << endl;
          cin >> clientes[index_clientes].emprestimo.data_vencimento;
-         cout << "O emprestimo foi dividido em " << clientes[index_clientes].parcelas << " com sucesso" << " e com data de vencimento para " << 
+         cout << "O emprestimo foi dividido em " << clientes[index_clientes].parcelas << "x com sucesso" << " e com data de vencimento para " << 
          clientes[index_clientes].emprestimo.data_vencimento << endl;
         
     }
