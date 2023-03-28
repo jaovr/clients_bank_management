@@ -250,7 +250,7 @@ cout << "1) - Sim" << endl;
 cout << "2) - Nao" << endl;
 cin >> aceite_parcelas;
 
-if(aceite_parcelas == 1){
+    if(aceite_parcelas == 1){
 
     cout << "Digite a quantidade de vezes que deseja parcelar o emprestimo" << endl;
     cin >>  clientes[index_clientes].parcelas;
@@ -272,7 +272,7 @@ if(aceite_parcelas == 1){
          clientes[index_clientes].emprestimo.data_vencimento << endl;
         
     }
-}
+   }  
 
 break;
 
