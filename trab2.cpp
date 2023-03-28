@@ -8,6 +8,8 @@ using namespace std;
 //adicionar data de vencimento junto com a criação da parcela
 //adicionar checagem de limites para seleção de clientes e outras partes
 //corrigir alguns detalhes
+// teste
+
 
 struct emprestimo {
 
