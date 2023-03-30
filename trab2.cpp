@@ -2,12 +2,10 @@
 #include <string>
 using namespace std;
 
-//criar sistema para excluir um cliente
-//adicionar checagem de limites para seleção de clientes e outras partes
-//corrigir alguns detalhes
-//criar limitação quando o numero de clientes cadastrados superar o limite.
-//nao esta verificando se o cliente ja possui um emprestimo
 //falta excluir o cliente.
+//nao estou conseguindo criar condicionais para o emprestimo.
+//usar o sistema de pesquisar clientes por indice do array n é uma boa ideia.
+//pesquisar por cpf?
 
 
 struct emprestimo {
@@ -33,13 +31,13 @@ struct cliente {
 };
 
 int count_clientes = 0;
-const int max_num_of_clientes = 1;
+const int max_num_of_clientes = 10;
 cliente clientes[max_num_of_clientes];
 
 int main(){
 
-int escolha_menu, index_clientes, menu_editar, aceite_parcelas, parcelas, sub_menu_editar;
-float valor_emprestado;
+int escolha_menu = 0, index_clientes = 0, menu_editar = 0, aceite_parcelas = 0, parcelas = 0, sub_menu_editar = 0;
+float valor_emprestado = 0.0;
 
 
  while(escolha_menu != 8) {
@@ -60,8 +58,9 @@ switch(escolha_menu){
 
 case 1:
 
-    if(count_clientes <= max_num_of_clientes){
-   
+    if(count_clientes < max_num_of_clientes){
+
+   cout << count_clientes << endl << endl;
     cout << endl;
     cout << "Digite o nome do novo cliente: " << endl;
     cin.ignore();
@@ -82,6 +81,7 @@ case 1:
     cout << "Cadastro do cliente foi concluido com sucesso." << endl << endl;
 
     count_clientes++;
+
 
     } else {
 
