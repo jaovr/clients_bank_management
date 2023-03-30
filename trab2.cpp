@@ -125,7 +125,6 @@ cout << "A data de nascimento cadastrada eh: " << clientes[index_clientes].data_
 cout << "O valor total de emprestimo eh de: R$ " << clientes[index_clientes].valortotal_emprestimo << endl;
 cout << "O parcelamento do emprestimo ficou em " << clientes[index_clientes].parcelas << "x de R$ " << clientes[index_clientes].parcelas_mensais << endl;
 cout << "A data de vencimento da parcela eh no dia: " << clientes[index_clientes].emprestimo.data_vencimento << endl;
-cout << clientes[index_clientes].emprestimo_ativo << endl;
 cout << endl;
     
 break;
