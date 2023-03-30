@@ -1,19 +1,14 @@
+// Nome: João Victor Rocha. RA: 2177268
+
 #include <iostream>
 #include <string>
 using namespace std;
 
-//falta excluir o cliente.
-//nao estou conseguindo criar condicionais para o emprestimo.
-//usar o sistema de pesquisar clientes por indice do array n é uma boa ideia.
-//pesquisar por cpf?
-
-
 struct emprestimo {
 
     bool parcela_paga;
-    string data_vencimento =  "nao cadastrado";
+    string data_vencimento = "nao cadastrado";
     string data_pagamento = "nao cadastrado";
-    bool emprestimo_ativo;
 
 };
 
@@ -27,6 +22,7 @@ struct cliente {
     float valortotal_emprestimo = 0;
     int parcelas_mensais = 0;
     int parcelas = 0;
+    bool emprestimo_ativo = false;
     emprestimo emprestimo;
 };
 
@@ -40,17 +36,18 @@ int escolha_menu = 0, index_clientes = 0, menu_editar = 0, aceite_parcelas = 0, 
 float valor_emprestado = 0.0;
 
 
- while(escolha_menu != 8) {
+ while(escolha_menu != 9) {
 
 cout << endl;
 cout << " 1) Cadastrar cliente" << endl;
-cout << " 2) Visualizar as informacoes de um cliente" << endl;
-cout << " 3) Editar as informacoes de um cliente" << endl;
-cout << " 4) Cadastrar parcela paga" << endl;
-cout << " 5) Cadastrar emprestimo" << endl;
-cout << " 6) Gerenciar parcelas" << endl;
-cout << " 7) Excluir cliente" << endl;
-cout << " 8) Sair" << endl;
+cout << " 2) Recadastro de cliente" << endl;
+cout << " 3) Visualizar as informacoes de um cliente" << endl;
+cout << " 4) Editar as informacoes de um cliente" << endl;
+cout << " 5) Cadastrar parcela paga" << endl;
+cout << " 6) Cadastrar emprestimo" << endl;
+cout << " 7) Gerenciar parcelas" << endl;
+cout << " 8) Excluir cliente" << endl;
+cout << " 9) Sair" << endl;
 cout << endl;
 cin >> escolha_menu;    
 
@@ -60,7 +57,6 @@ case 1:
 
     if(count_clientes < max_num_of_clientes){
 
-   cout << count_clientes << endl << endl;
     cout << endl;
     cout << "Digite o nome do novo cliente: " << endl;
     cin.ignore();
@@ -92,9 +88,33 @@ case 1:
 break;
 
 case 2:
+
+    cout << endl;
+    cout << "Digite o numero do indice que esta disponivel para utilizacao: " << endl << endl;
+    cin >> index_clientes;
+    cout << "Digite o nome do novo cliente: " << endl;
+    cin.ignore();
+    getline(cin, clientes[index_clientes].nome);
+    
+    cout << "Digite o CPF do novo cliente: " << endl;
+    getline(cin, clientes[index_clientes].cpf);
+    
+    cout << "Digite o endereco do novo cliente: " << endl;
+    getline(cin, clientes[index_clientes].endereco);
+    
+    cout << "Digite a data de nascimento do novo cliente: " << endl;
+    getline(cin, clientes[index_clientes].data_nascimento);
+
+    cout << endl;
+    cout << "O cliente " << clientes[count_clientes].nome << " foi armazenado no indice " << count_clientes  << endl;
+    cout << "Cadastro do cliente foi concluido com sucesso." << endl << endl;
+
+break;
+
+case 3:
     
 cout << endl;
-cout << "Selecione o indice do cliente a ser visualizado: " << endl;
+cout << "Selecione o indice do cliente a ser visualizado: " << endl << endl;
 cin >> index_clientes;
 
 cout << endl;
@@ -105,15 +125,15 @@ cout << "A data de nascimento cadastrada eh: " << clientes[index_clientes].data_
 cout << "O valor total de emprestimo eh de: R$ " << clientes[index_clientes].valortotal_emprestimo << endl;
 cout << "O parcelamento do emprestimo ficou em " << clientes[index_clientes].parcelas << "x de R$ " << clientes[index_clientes].parcelas_mensais << endl;
 cout << "A data de vencimento da parcela eh no dia: " << clientes[index_clientes].emprestimo.data_vencimento << endl;
-cout << clientes[index_clientes].emprestimo.emprestimo_ativo << endl;
+cout << clientes[index_clientes].emprestimo_ativo << endl;
 cout << endl;
     
 break;
 
-case 3:
+case 4:
 
 cout << endl;
-cout << "Selecione o indice do cliente que deseja editar os dados: " << endl;
+cout << "Selecione o indice do cliente que deseja editar os dados: " << endl << endl;
 cin >> index_clientes;
 cout << "Cliente selecionado: " << clientes[index_clientes].nome << endl;
 cout << endl;
@@ -123,9 +143,9 @@ cout << endl;
     cout << " 2) Editar CPF" << endl;
     cout << " 3) Editar endereco" << endl;
     cout << " 4) Editar data de nascimento" << endl;
-    cout << " 5) Voltar para o menu principal" << endl;
+    cout << " 5) Voltar para o menu principal" << endl << endl;
     cin >> menu_editar;
-    cout << endl;
+    cout << endl << endl;
     
     switch(menu_editar){
 
@@ -166,10 +186,10 @@ cout << endl;
 
 break;
 
-case 4:
+case 5:
 
 cout << endl;
-cout << "Selecione o indice do cliente que deseja confirmar o pagamento da parcela: " << endl;
+cout << "Selecione o indice do cliente que deseja confirmar o pagamento da parcela: " << endl << endl;
 cin >> index_clientes;
 cout << "Cliente selecionado: " << clientes[index_clientes].nome << endl;
 cout << endl;
@@ -189,13 +209,13 @@ cout << endl;
             
             cout << "O cliente pagou todas as parcelas" << endl;
             clientes[index_clientes].emprestimo.data_vencimento = "Todas as parcelas foram pagas";
-            clientes[index_clientes].emprestimo.parcela_paga == true;
-            clientes[index_clientes].emprestimo.emprestimo_ativo == false;
+            clientes[index_clientes].emprestimo.parcela_paga = true;
+            clientes[index_clientes].emprestimo_ativo = false;
 
         } else if (clientes[index_clientes].parcelas > 0) {
 
             clientes[index_clientes].parcelas -= 1;
-            clientes[index_clientes].emprestimo.parcela_paga == true;
+            clientes[index_clientes].emprestimo.parcela_paga = true;
             cout << "Digite a data de pagamento desta parcela" << endl;
             cin >> clientes[index_clientes].emprestimo.data_pagamento;
             clientes[index_clientes].emprestimo.data_vencimento == "Parcela paga, por favor adicione uma nova data";
@@ -213,7 +233,7 @@ cout << endl;
 
         } else if (clientes[index_clientes].parcelas > 0) {
 
-            clientes[index_clientes].emprestimo.parcela_paga == false;
+            clientes[index_clientes].emprestimo.parcela_paga = false;
             cout << "Digite a data de vencimento da proxima parcela" << endl;
             cin >> clientes[index_clientes].emprestimo.data_vencimento;
 
@@ -226,42 +246,37 @@ cout << endl;
 
 break;
 
-case 5:
+case 6:
 
 cout << endl;
 cout << "Selecione o indice do cliente que deseja cadastrar um emprestimo: " << endl << endl;
 cin >> index_clientes;
 
- if(clientes[index_clientes].emprestimo.emprestimo_ativo == true){
-        
-        cout << "Cliente possui emprestimo ativo" << endl;
-        break;
-
-       }
+ if(clientes[index_clientes].emprestimo_ativo == false){
 
 cout << "Cliente selecionado: " << clientes[index_clientes].nome << endl;
 cout << endl << endl;
 
-  
 cout << "Insira o valor do emprestimo" << endl;
 cin >> valor_emprestado;
 clientes[index_clientes].valortotal_emprestimo = valor_emprestado;
-clientes[index_clientes].emprestimo.emprestimo_ativo == true;
 cout << "Valor de emprestimo cadastrado com sucesso para o cliente " << clientes[index_clientes].nome << endl << endl;
 
     cout << "Deseja parcelar o valor do emprestimo?" << endl;
-    cout << "1) - Sim" << endl;
+    cout << "1) - Sim" << endl;  
     cout << "2) - Nao" << endl;
     cin >> aceite_parcelas;
 
-       if(aceite_parcelas == 1){
+    if(aceite_parcelas == 1){
 
        cout << "Digite a quantidade de vezes que deseja parcelar o emprestimo" << endl;
        cin >>  clientes[index_clientes].parcelas;
+
        if (clientes[index_clientes].parcelas > 12) {
 
-             clientes[index_clientes].parcelas = 0;
-             clientes[index_clientes].valortotal_emprestimo = 0;
+            clientes[index_clientes].parcelas = 0;
+            clientes[index_clientes].valortotal_emprestimo = 0;
+            clientes[index_clientes].emprestimo_ativo = true;
 
           cout << "Nao eh permitido realizar mais que 12 parcelas em um emprestimo" << endl;
     
@@ -272,18 +287,22 @@ cout << "Valor de emprestimo cadastrado com sucesso para o cliente " << clientes
          cout << endl;
          cout << "Insira a data de vencimento da parcela: " << endl;
          cin >> clientes[index_clientes].emprestimo.data_vencimento;
-         cout << "O emprestimo foi dividido em " << clientes[index_clientes].parcelas << "x com sucesso" << " e data de vencimento da primeira parcela para " << 
+         cout << "O emprestimo foi dividido em " << clientes[index_clientes].parcelas << "x com sucesso" << " e com data de vencimento da primeira parcela para " << 
          clientes[index_clientes].emprestimo.data_vencimento << endl;
         
         }
-      }  
+    }  
+       } else {
+
+              cout << "Cliente possui emprestimo ativo" << endl;
+        }
 
 break;
 
-case 6:
+case 7:
 
 cout << endl;
-cout << "Selecione o indice do cliente que deseja gerenciar as parcelas: " << endl;
+cout << "Selecione o indice do(a) cliente que deseja gerenciar a(s) parcela(s): " << endl << endl;
 cin >> index_clientes;
 cout << "Cliente selecionado: " << clientes[index_clientes].nome << endl;
 cout << endl;
@@ -310,14 +329,14 @@ cout << endl;
 
         if(clientes[index_clientes].emprestimo.parcela_paga == true){
 
-            clientes[index_clientes].emprestimo.parcela_paga == false;
+            clientes[index_clientes].emprestimo.parcela_paga = false;
 
-            cout << "A parcela foi paga" << endl;
+            cout << "A(s) parcela(s) foi(foram) paga(s)" << endl;
 
         }
          else {
 
-            cout << "A parcela nao foi paga" << endl;
+            cout << "A(s) parcelas(s) nao foi(foram) paga(s)" << endl;
 
          }
 
@@ -327,13 +346,13 @@ cout << endl;
          
          if(clientes[index_clientes].parcelas == 0){
 
-           clientes[index_clientes].parcelas_mensais == 0;
-           cout << "O valor atual da parcela eh de: R$" << clientes[index_clientes].parcelas_mensais << endl;
+           clientes[index_clientes].parcelas_mensais = 0;
+           cout << "O valor atual da(s) parcela(s) eh de: R$" << clientes[index_clientes].parcelas_mensais << endl;
 
          }
          else {
 
-            cout << "O valor atual da parcela eh de: R$" << clientes[index_clientes].parcelas_mensais << endl;
+            cout << "O valor atual das parcela(s) eh de: R$" << clientes[index_clientes].parcelas_mensais << endl;
 
          }
          
@@ -364,12 +383,33 @@ cout << endl;
 
 break;
 
-case 7:
+case 8:
 
+cout << endl;
+cout << "Selecione o indice do(a) cliente a ser deletado(a): " << endl << endl;
+cin >> index_clientes;
+
+cout << endl;
+cout << "Cliente: " << clientes[index_clientes].nome << " deletado(a) com sucesso !" << endl;
+cout << "O indice " << index_clientes << " esta pronto para ser reutilizado" << endl;
+cout << "Se deseja cadastrar um novo cliente neste indice, digite 2 no menu principal" << endl;
+
+ clientes[index_clientes].nome = "cliente nao cadastrado";
+ clientes[index_clientes].cpf = "cliente nao cadastrado";
+ clientes[index_clientes].endereco = "cliente nao cadastrado";
+ clientes[index_clientes].data_nascimento = "cliente nao cadastrado";
+ clientes[index_clientes].valortotal_emprestimo = 0;
+ clientes[index_clientes].parcelas = 0;
+ clientes[index_clientes].parcelas_mensais = 0;
+ clientes[index_clientes].emprestimo.data_vencimento =  "nao cadastrado";
+ clientes[index_clientes].emprestimo.data_pagamento =  "nao cadastrado";
+ clientes[index_clientes].emprestimo_ativo = false;
+
+ cout << endl;
 
 break;
 
-case 8:
+case 9:
 
 cout << endl;
 cout << "Tenha um bom dia !" << endl;
