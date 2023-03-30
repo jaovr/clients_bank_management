@@ -2,13 +2,12 @@
 #include <string>
 using namespace std;
 
-//criar sistema de emprestimos
 //criar sistema para excluir um cliente
-//adicionar se a parcela foi paga e junto a data de pagamento
-//adicionar data de vencimento junto com a criação da parcela
 //adicionar checagem de limites para seleção de clientes e outras partes
 //corrigir alguns detalhes
-//adicionar <typeinfo> ... typeid(variavel) == typeid(tipo da variavel)
+//criar limitação quando o numero de clientes cadastrados superar o limite.
+//nao esta verificando se o cliente ja possui um emprestimo
+//falta excluir o cliente.
 
 
 struct emprestimo {
@@ -16,6 +15,7 @@ struct emprestimo {
     bool parcela_paga;
     string data_vencimento =  "nao cadastrado";
     string data_pagamento = "nao cadastrado";
+    bool emprestimo_ativo;
 
 };
 
@@ -33,18 +33,35 @@ struct cliente {
 };
 
 int count_clientes = 0;
-const int max_num_of_clientes = 3;
+const int max_num_of_clientes = 1;
 cliente clientes[max_num_of_clientes];
 
-void adicionar_cliente(){
+int main(){
 
-    if(count_clientes > max_num_of_clientes){
+int escolha_menu, index_clientes, menu_editar, aceite_parcelas, parcelas, sub_menu_editar;
+float valor_emprestado;
 
-      cout << "Nao foi possivel adicionar mais clientes" << endl;  
-    }
 
-    else {
+ while(escolha_menu != 8) {
 
+cout << endl;
+cout << " 1) Cadastrar cliente" << endl;
+cout << " 2) Visualizar as informacoes de um cliente" << endl;
+cout << " 3) Editar as informacoes de um cliente" << endl;
+cout << " 4) Cadastrar parcela paga" << endl;
+cout << " 5) Cadastrar emprestimo" << endl;
+cout << " 6) Gerenciar parcelas" << endl;
+cout << " 7) Excluir cliente" << endl;
+cout << " 8) Sair" << endl;
+cout << endl;
+cin >> escolha_menu;    
+
+switch(escolha_menu){
+
+case 1:
+
+    if(count_clientes <= max_num_of_clientes){
+   
     cout << endl;
     cout << "Digite o nome do novo cliente: " << endl;
     cin.ignore();
@@ -66,35 +83,11 @@ void adicionar_cliente(){
 
     count_clientes++;
 
+    } else {
+
+       cout << "Nao foi possivel adicionar mais clientes" << endl;
+
     }
-    
-}
-
-int main(){
-
-int escolha_menu, index_clientes, menu_editar, aceite_parcelas, parcelas, sub_menu_editar;
-float valor_emprestado;
-
-
-while (escolha_menu != 8){
-
-cout << endl;
-cout << " 1) Cadastrar cliente" << endl;
-cout << " 2) Visualizar as informacoes de um cliente" << endl;
-cout << " 3) Editar as informacoes de um cliente" << endl;
-cout << " 4) Cadastrar parcela paga" << endl;
-cout << " 5) Cadastrar emprestimo" << endl;
-cout << " 6) Gerenciar parcelas" << endl;
-cout << " 7) Excluir cliente" << endl;
-cout << " 8) Sair" << endl;
-cout << endl;
-cin >> escolha_menu;
-
-switch(escolha_menu){
-
-case 1:
-
-adicionar_cliente();
 
 break;
 
@@ -112,6 +105,7 @@ cout << "A data de nascimento cadastrada eh: " << clientes[index_clientes].data_
 cout << "O valor total de emprestimo eh de: R$ " << clientes[index_clientes].valortotal_emprestimo << endl;
 cout << "O parcelamento do emprestimo ficou em " << clientes[index_clientes].parcelas << "x de R$ " << clientes[index_clientes].parcelas_mensais << endl;
 cout << "A data de vencimento da parcela eh no dia: " << clientes[index_clientes].emprestimo.data_vencimento << endl;
+cout << clientes[index_clientes].emprestimo.emprestimo_ativo << endl;
 cout << endl;
     
 break;
@@ -196,6 +190,7 @@ cout << endl;
             cout << "O cliente pagou todas as parcelas" << endl;
             clientes[index_clientes].emprestimo.data_vencimento = "Todas as parcelas foram pagas";
             clientes[index_clientes].emprestimo.parcela_paga == true;
+            clientes[index_clientes].emprestimo.emprestimo_ativo == false;
 
         } else if (clientes[index_clientes].parcelas > 0) {
 
@@ -203,7 +198,7 @@ cout << endl;
             clientes[index_clientes].emprestimo.parcela_paga == true;
             cout << "Digite a data de pagamento desta parcela" << endl;
             cin >> clientes[index_clientes].emprestimo.data_pagamento;
-            clientes[index_clientes].emprestimo.data_vencimento = "Parcela paga, por favor adicione uma nova data";
+            clientes[index_clientes].emprestimo.data_vencimento == "Parcela paga, por favor adicione uma nova data";
         
           }
 
@@ -236,33 +231,42 @@ case 5:
 cout << endl;
 cout << "Selecione o indice do cliente que deseja cadastrar um emprestimo: " << endl << endl;
 cin >> index_clientes;
+
+ if(clientes[index_clientes].emprestimo.emprestimo_ativo == true){
+        
+        cout << "Cliente possui emprestimo ativo" << endl;
+        break;
+
+       }
+
 cout << "Cliente selecionado: " << clientes[index_clientes].nome << endl;
 cout << endl << endl;
 
+  
 cout << "Insira o valor do emprestimo" << endl;
 cin >> valor_emprestado;
-
 clientes[index_clientes].valortotal_emprestimo = valor_emprestado;
+clientes[index_clientes].emprestimo.emprestimo_ativo == true;
 cout << "Valor de emprestimo cadastrado com sucesso para o cliente " << clientes[index_clientes].nome << endl << endl;
 
-cout << "Deseja parcelar o valor do emprestimo?" << endl;
-cout << "1) - Sim" << endl;
-cout << "2) - Nao" << endl;
-cin >> aceite_parcelas;
+    cout << "Deseja parcelar o valor do emprestimo?" << endl;
+    cout << "1) - Sim" << endl;
+    cout << "2) - Nao" << endl;
+    cin >> aceite_parcelas;
 
-    if(aceite_parcelas == 1){
+       if(aceite_parcelas == 1){
 
-    cout << "Digite a quantidade de vezes que deseja parcelar o emprestimo" << endl;
-    cin >>  clientes[index_clientes].parcelas;
-    if (clientes[index_clientes].parcelas > 12) {
+       cout << "Digite a quantidade de vezes que deseja parcelar o emprestimo" << endl;
+       cin >>  clientes[index_clientes].parcelas;
+       if (clientes[index_clientes].parcelas > 12) {
 
-        clientes[index_clientes].parcelas = 0;
-        clientes[index_clientes].valortotal_emprestimo = 0;
+             clientes[index_clientes].parcelas = 0;
+             clientes[index_clientes].valortotal_emprestimo = 0;
 
-        cout << "Nao eh permitido realizar mais que 12 parcelas em um emprestimo" << endl;
+          cout << "Nao eh permitido realizar mais que 12 parcelas em um emprestimo" << endl;
     
-    }
-      else {
+        }
+          else {
 
          clientes[index_clientes].parcelas_mensais = (valor_emprestado /  clientes[index_clientes].parcelas);
          cout << endl;
@@ -271,8 +275,8 @@ cin >> aceite_parcelas;
          cout << "O emprestimo foi dividido em " << clientes[index_clientes].parcelas << "x com sucesso" << " e data de vencimento da primeira parcela para " << 
          clientes[index_clientes].emprestimo.data_vencimento << endl;
         
-    }
-   }  
+        }
+      }  
 
 break;
 
@@ -333,7 +337,6 @@ cout << endl;
 
          }
          
-
          break;
 
          case 4:
@@ -376,7 +379,7 @@ break;
 
 }
 
-}
+} 
 
 return 0;
 
